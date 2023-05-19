@@ -14,7 +14,6 @@
             <x-admin.forms.lfm-standalone id="waterMark" label="تصویر واتر مارک*" :file="$waterMark" required="true" wire:model="waterMark"/>
             <x-admin.forms.dropdown id="status" :data="$data['status']" label="وضعیت سایت*" wire:model.defer="status"/>
             <x-admin.forms.input type="text" id="registerGift" label="هدیه ثبت نام(تومان)" wire:model.defer="registerGift"/>
-            <x-admin.forms.lfm-standalone id="logInImage" label="تصویر صفحه ورود*" :file="$logInImage" type="image" required="true" wire:model="logInImage"/>
             <x-admin.forms.text-area label="توضیحات سئو*" id="seoDescription" wire:model.defer="seoDescription" />
             <x-admin.forms.text-area label="کلمات سئو*" help="کلمات را با کاما از هم جدا کنید" id="seoKeyword" wire:model.defer="seoKeyword" />
             <x-admin.forms.input type="text" id="notification" label="اعلان بالای صفحه" wire:model.defer="notification"/>
@@ -24,7 +23,12 @@
             <x-admin.forms.input type="number" id="password_length" label="حداقل طول پسورد*" wire:model.defer="password_length"/>
             <x-admin.forms.input type="number" id="dos_count" label="حداکثر امکان برای درخواست های پیوسته سمت سرور*" wire:model.defer="dos_count"/>
             <x-admin.button class="primary" content="افزودن لینک ارتباطی" wire:click="addLink()" />
-            @foreach($contact as $key => $item)
+
+            <x-admin.forms.input type="text" id="start_time" label="تایم کاری شنبه تا چهارشنبه" wire:model.defer="start_time"/>
+            <x-admin.forms.input type="text" id="end_time" label="تایم کاری پنجشنبه تا حمعه" wire:model.defer="end_time"/>
+
+
+        @foreach($contact as $key => $item)
                 <div class="form-group" style="display: flex;align-items: center">
                     <div style="padding: 5px">
                         <input class="form-control" id="{{ $key }}image" type="text" placeholder="تصویر" wire:model.defer="contact.{{$key}}.img">

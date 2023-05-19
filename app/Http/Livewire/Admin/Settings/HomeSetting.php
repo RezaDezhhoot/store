@@ -10,7 +10,14 @@ class HomeSetting extends BaseComponent
 {
     public $header , $content = [] , $i = 1 , $titleContent , $title , $type  , $width , $bgImage , $data , $moreLink , $widthCase;
     public $category , $bannerLink , $bannerImage , $contentCase = [] , $mode;
-    public $titleSlider , $slider , $sliderImage , $sliderLink , $sliders = [] , $modeSlider , $row , $view;
+    public $titleSlider , $slider , $sliderImage , $sliderLink , $sliders , $modeSlider , $row , $view , $subtitle;
+
+    public $homeAbout;
+
+    public $homeImg1 , $homeImg2 , $homeImg3;
+
+    public $services = [];
+
     public function mount()
     {
         $this->header = 'تنظیمات صفحه اصلی';
@@ -44,8 +51,16 @@ class HomeSetting extends BaseComponent
             '11' => '91.66%',
             '12' => '100%',
         ];
-        $this->content = collect(Setting::getSingleRow('homeContent',[]));
-        $this->sliders = Setting::getSingleRow('homeSlider',[]);
+//        $this->content = collect(Setting::getSingleRow('homeContent',[]));
+        $this->sliders = Setting::getSingleRow('homeSlider');
+        $this->slider = $this->sliders['slider'] ?? null;
+        $this->subtitle = $this->sliders['subtitle'] ?? null;
+        $this->sliderImage = $this->sliders['sliderImage'] ?? null;
+        $this->sliderLink = $this->sliders['sliderLink'] ?? null;
+        $this->homeAbout = Setting::getSingleRow('homeAbout');
+        $this->homeImg1 = Setting::getSingleRow('homeImg1');
+        $this->homeImg2 = Setting::getSingleRow('homeImg1');
+        $this->homeImg3 = Setting::getSingleRow('homeImg3');
     }
     public function addContent($title)
     {
@@ -236,6 +251,17 @@ class HomeSetting extends BaseComponent
     {
         $this->resetErrorBag();
         Setting::updateOrCreate(['name' => 'homeContent'], ['value' => json_encode($this->content)]);
+        Setting::updateOrCreate(['name' => 'homeAbout'], ['value' => ($this->homeAbout)]);
+        Setting::updateOrCreate(['name' => 'homeImg1'], ['value' => ($this->homeImg1)]);
+        Setting::updateOrCreate(['name' => 'homeImg2'], ['value' => ($this->homeImg2)]);
+        Setting::updateOrCreate(['name' => 'homeImg3'], ['value' => ($this->homeImg3)]);
+
+        $this->sliders = [
+            'slider' => $this->slider,
+            'subtitle' => $this->subtitle,
+            'sliderImage' => $this->sliderImage,
+            'sliderLink' => $this->sliderLink
+        ];
         Setting::updateOrCreate(['name' => 'homeSlider'], ['value' => json_encode($this->sliders)]);
         $this->emitNotify('اطلاعات با موفقیت ثبت شد');
     }

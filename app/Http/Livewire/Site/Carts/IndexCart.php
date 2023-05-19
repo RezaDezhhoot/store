@@ -29,19 +29,13 @@ class IndexCart extends BaseComponent
         }
     }
 
-    public function updated($name, $value)
+    public function updatedQuantities($value, $key)
     {
-        $elements = explode('.', $name);
-
-        if ($elements[0] == 'quantities'){
-            $this->validate(['quantities.'.$elements[1] => ['required', 'integer', 'min:1', 'max:100']]);
-
-            $product = Product::find($elements[1]);
+            $product = Product::find($key);
             if (!is_null($product->quantity) && $product->quantity < $value) {
                 return;
             }
-            Cart::update($elements[1], $value);
-        }
+            Cart::update($key, $value);
     }
 
 

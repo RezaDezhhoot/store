@@ -23,6 +23,8 @@ class Article extends Model
     const SHARED = 'shared';
     const DEMO = 'demo';
 
+    public $appends = ['day','month'];
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
@@ -54,5 +56,20 @@ class Article extends Model
     public function getDateAttribute()
     {
         return Jalalian::forge($this->created_at)->format('%A, %d %B %Y');
+    }
+
+    public function getDayAttribute()
+    {
+        return Jalalian::forge($this->created_at)->format('%d');
+    }
+
+    public function getMonthAttribute()
+    {
+        return Jalalian::forge($this->created_at)->format('%B');
+    }
+
+    public function scopePublished($q)
+    {
+        return $q->where('status',self::SHARED);
     }
 }

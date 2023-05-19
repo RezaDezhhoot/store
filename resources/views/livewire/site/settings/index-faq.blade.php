@@ -1,40 +1,42 @@
 <div>
-    <x-site.breadcrumbs :data="$address" />
-    <div class="faq_content_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="faq_content_wrapper">
-                        <h2>سوالات متداول</h2>
+    <div role="main" class="main">
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12 align-self-center p-static order-2 text-center">
+                        <h1 class="text-dark font-weight-bold text-8">سوالات متداول</h1>
+                    </div>
+
+                    <div class="col-md-12 align-self-center order-1">
+                        <x-site.breadcrumbs :data="$address" />
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="accordion_area">
-        <div class="container">
+        </section>
+
+        <div class="container py-4">
+
             <div class="row">
-                <div class="col-12">
-                    <div id="accordion" class="card__accordion">
+                <div class="col">
+                    <div class="toggle toggle-primary" data-plugin-toggle>
                         @foreach($data['faq'] as $key => $item)
-                            <div class="card card_dipult">
-                                <div class="card-header card_accor" id="heading{{$key}}">
-                                    <button class="btn btn-link {{ $key == 0 ? '' : 'collapsed' }} " data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="false" aria-controls="collapse{{$key}}">
-                                        {!! $item->value['question'] !!}
-                                        <i class="fa fa-plus"></i>
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                            <section class="toggle {{$key == 0 ? 'active' : ''}} ">
+                                <a class="toggle-title">
+                                    {!! $item->value['question'] !!}
+                                </a>
+                                <div class="toggle-content">
+                                    {!! $item->value['answer'] !!}
                                 </div>
-                                <div id="collapse{{$key}}" class="collapse {{ $key == 0 ? 'show' : '' }}" aria-labelledby="heading{{$key}}" data-parent="#accordion">
-                                    <div class="card-body">
-                                        {!! $item->value['answer'] !!}
-                                    </div>
-                                </div>
-                            </div>
+                            </section>
                         @endforeach
                     </div>
+
                 </div>
+
             </div>
+
         </div>
     </div>
+
 </div>

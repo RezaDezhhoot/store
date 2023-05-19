@@ -1,142 +1,164 @@
 <div>
-    <x-site.breadcrumbs :data="$address" />
+    <div role="main" class="main">
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
 
-    <div class="blog_details mt-60">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-12">
-                    <!--blog grid area start-->
-                    <div class="blog_wrapper">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="post_header">
-                                    <h3 class="post_title">{{ $article->title }}</h3>
-                                    <div class="blog_meta">
-                                        <span class="author">ارسال توسط : <a>{{ $article->user->user_name }}</a> / </span>
-                                        <span class="post_date">در : <a>{{ $article->date }}</a> /</span>
-                                    </div>
-                                </div>
-                                <div class="blog_thumb">
-                                    <a><img src="{{ asset($article->main_image) }}" alt="{{ $article->title }}"></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <div class="post_content">
-                                        {!! $article->content !!}
-                                    </div>
-                                    <div class="entry_content">
-                                        <div class="post_meta">
-                                            <span>برچسب ها: </span>
-                                            @foreach(explode(',',$article->seo_keywords) as $item)
-                                                <span><a href="{{ route('articles',['q'=>$item]) }}">، {{ $item }}</a></span>
-                                            @endforeach
-                                        </div>
-
-                                        <div class="social_sharing">
-                                            <p>اشتراک گذاری این مطلب:</p>
-                                            <ul>
-                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" title="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="https://twitter.com/intent/tweet?url={{ url()->current() }}" title="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="https://t.me/share/url?url={{ url()->current() }}" title="telegram"><i class="fa fa-telegram"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                        <div class="related_posts">
-                            <h3>مطالب مرتبط</h3>
-                            <div class="row">
-                                @foreach($related as $item)
-                                    <div class="col-lg-4 col-md-6">
-                                        <article class="single_related">
-                                            <figure>
-                                                <div class="related_thumb">
-                                                    <img src="{{asset($item->main_image)}}" alt="{{ $item->title }}">
-                                                </div>
-                                                <figcaption class="related_content">
-                                                    <div class="blog_meta">
-                                                        <span class="author">توسط: <a>{{ $item->user->user_name }}</a> / </span>
-                                                        <span class="post_date"> {{ $item->user->date }}	</span>
-                                                    </div>
-                                                    <h4><a href="{{ route('article',$item->slug) }}">{{ $item->title }}</a></h4>
-                                                </figcaption>
-                                            </figure>
-                                        </article>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="comments_box">
-                            <h3>{{ $comments->count() <= 0 ? 'بدون' : $comments->count()  }} دیدگاه	</h3>
-                            @foreach($comments as $item)
-                                <div class="comment_list">
-                                    <div class="comment_thumb">
-                                        <img src="{{asset('assets/img/blog/comment3.png.jpg')}}" alt="">
-                                    </div>
-                                    <div class="comment_content">
-                                        <div class="comment_meta">
-                                            <h5><a>{{ $item->user->user_name }}</a></h5>
-                                            <span>{{ $item->date }}</span>
-                                        </div>
-                                        <p>
-                                            {!! $item->comment !!}
-                                        </p>
-                                    </div>
-
-                                </div>
-                                @if(!is_null($item->answer))
-                                    <div class="comment_list list_two">
-                                        <div class="comment_thumb">
-                                            <img src="{{asset('assets/img/blog/comment3.png.jpg')}}" alt="">
-                                        </div>
-                                        <div class="comment_content">
-                                            <div class="comment_meta">
-                                                <h5><a>پشتیبانی</a></h5>
-                                                <span>{{ $item->updateDate }}</span>
-                                            </div>
-                                            <p>
-                                                {!! $item->answer !!}
-                                            </p>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="comments_form">
-                            <h3>یک دیدگاه ارسال کنید </h3>
-                            <form>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label for="review_comment">دیدگاه </label>
-                                        <textarea wire:model.defer="newComment" name="comment" id="review_comment"></textarea>
-                                        @error('newComment')
-                                        <p class="text-danger">
-                                            {{ $message }}
-                                        </p>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="g-recaptcha d-inline-block" data-sitekey="{{ config('services.recaptcha.site_key') }}"
-                                             data-callback="reCaptchaCallback" wire:ignore></div>
-                                        @error('recaptcha')
-                                        <p class="invalid-feedback d-block">
-                                            {{ $message }}
-                                        </p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <button class="button" wire:click="sendComment()" type="button">ارسال دیدگاه</button>
-
-                            </form>
-                        </div>
-
+                    <div class="col-md-12 align-self-center p-static order-2 text-center">
+                        <h1 class="text-dark font-weight-bold text-8">{{ $article->title }}</h1>
+                        <span class="sub-title text-dark">{{ $article->sub_title }}</span>
                     </div>
-                    <!--blog grid area start-->
+
+                    <div class="col-md-12 align-self-center order-1">
+                        <x-site.breadcrumbs :data="$address" />
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="container py-4">
+
+            <div class="row">
+                <div class="col">
+                    <div class="blog-posts single-post">
+
+                        <article class="post post-large blog-single-post border-0 m-0 p-0">
+                            <div class="post-image ml-0">
+                                <a>
+                                    <img src="{{asset($article->main_image)}}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="{{$article->title}}">
+                                </a>
+                            </div>
+
+                            <div class="post-date ml-0">
+                                <span class="day">{{$article->day}}</span>
+                                <span class="month">{{$article->month}}</span>
+                            </div>
+
+                            <div class="post-content ml-0">
+
+                                <h2 class="font-weight-bold mt-n3 mb-2 pb-1 pt-1 line-height-7 text-7"><a>{{$article->title}}</a></h2>
+
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> توسط  <a >{{ $article->user->user_name }}</a> </span>
+                                    <span><i class="far fa-folder"></i>
+                                        @foreach(explode(',',$article->seo_keywords) as $item)
+                                            <a href="{{ route('articles',['q'=>$item]) }}">، {{ $item }}</a>
+                                        @endforeach
+                                    </span>
+                                </div>
+
+                                {!! $article->content !!}
+
+                                <div class="post-block mt-5 post-share">
+                                    <h4 class="mb-3 secondary-font">به اشتراک گذاری این مطلب</h4>
+
+                                    <!-- AddThis Button BEGIN -->
+                                    <div class=" ">
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}"  class="addthis_button_facebook_like" fb:like:layout="button_count">
+                                            <i class="fab fa-facebook"></i>
+                                        </a>
+                                        <a href="https://twitter.com/intent/tweet?url={{ url()->current() }}" class="addthis_button_tweet">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a  href="https://t.me/share/url?url={{ url()->current() }}" class="addthis_button_telegram">
+                                            <i class="fab fa-telegram"></i>
+                                        </a>
+                                    </div>
+                                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50faf75173aadc53"></script>
+                                    <!-- AddThis Button END -->
+
+                                </div>
+
+                                <div id="comments" class="post-block mt-5 post-comments">
+                                    <h4 class="mb-3 secondary-font">{{ $comments->count() <= 0 ? 'بدون' : $comments->count()  }} دیدگاه</h4>
+
+                                    <ul class="comments">
+                                        @foreach($comments as $item)
+                                            <li>
+                                                <div class="comment">
+                                                    <div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+                                                        <i class="fa fa-4x fa-user"></i>
+                                                    </div>
+                                                    <div class="comment-block">
+                                                        <div class="comment-arrow"></div>
+                                                        <span class="comment-by">
+																<strong>{{ $item->user->user_name }}</strong>
+															</span>
+                                                        {!! $item->comment !!}
+                                                        <span class="date float-right">{{ $item->date }}</span>
+                                                    </div>
+                                                </div>
+                                                @if(!is_null($item->answer))
+                                                    <ul class="comments reply">
+                                                        <li>
+                                                            <div class="comment">
+                                                                <div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+                                                                    <i class="fa fa-4x fa-user"></i>
+                                                                </div>
+                                                                <div class="comment-block">
+                                                                    <div class="comment-arrow"></div>
+                                                                    <span class="comment-by">
+																		<strong>پشتیبانی </strong>
+																	</span>
+                                                                    <p>
+                                                                        {!! $item->answer !!}
+                                                                    </p>
+                                                                    <span class="date float-right">{{ $item->updateDate }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
+                                </div>
+
+                                <div class="post-block mt-5 post-leave-comment">
+                                    <h4 class="mb-3 secondary-font pb-1">دیدگاه خود را بیان کنید</h4>
+                                    <form class="contact-form p-4 rounded bg-color-grey">
+                                        <div class="p-2">
+                                            <div class="form-row">
+                                                <div class="form-group col">
+                                                    <label class="required font-weight-bold text-dark text-1-05em">دیدگاه</label>
+                                                    <textarea maxlength="5000" data-msg-required="لطفا پیام خود را وارد کنید." rows="8" class="form-control" wire:model.defer="newComment" name="comment" id="review_comment" required></textarea>
+                                                    @error('newComment')
+                                                    <p class="text-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col">
+                                                    <div class="g-recaptcha d-inline-block" data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                                                         data-callback="reCaptchaCallback" wire:ignore></div>
+                                                    @error('recaptcha')
+                                                    <p class="invalid-feedback d-block">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col mb-0">
+                                                    <input class="button" wire:click="sendComment()" type="button" value="ارسال دیدگاه" class="btn btn-primary btn-modern" data-loading-text="در حال بارگذاری ...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         function reCaptchaCallback(response) {
@@ -153,4 +175,4 @@
 
     </script>
 </div>
-
+</div>

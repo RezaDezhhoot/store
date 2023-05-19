@@ -15,7 +15,7 @@ use Livewire\WithPagination;
 class IndexArticles extends BaseComponent
 {
     use WithPagination;
-    public $data = [] , $address , $paginate = 6 , $category , $q , $lastPosts , $categories;
+    public $data = [] , $address , $paginate = 2 , $category , $q , $lastPosts , $categories;
     protected $queryString = ['q','category'];
     public function mount()
     {

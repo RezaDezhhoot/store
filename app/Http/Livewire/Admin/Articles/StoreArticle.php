@@ -13,7 +13,7 @@ class StoreArticle extends BaseComponent
 {
     use AuthorizesRequests;
     public $article , $mode , $header , $data = [] , $category;
-    public $slug ,$title,$main_image,$content,$seo_keywords,$seo_description,$status;
+    public $slug ,$title,$main_image,$content,$seo_keywords,$seo_description,$status , $sub_title;
 
     public function mount($action , $id = null)
     {
@@ -30,6 +30,7 @@ class StoreArticle extends BaseComponent
             $this->seo_description = $this->article->seo_description;
             $this->status = $this->article->status;
             $this->category = $this->article->category_id;
+            $this->sub_title = $this->article->sub_title;
         } elseif($action == 'create') $this->header = 'مقاله جدید';
         else abort(404);
 
@@ -59,7 +60,7 @@ class StoreArticle extends BaseComponent
             $this->saveInDateBase($this->article);
         else{
             $this->saveInDateBase(new Article());
-            $this->reset(['slug','title','main_image','content','seo_keywords','seo_description','status','category']);
+            $this->reset(['slug','title','main_image','content','seo_keywords','seo_description','status','category','sub_title']);
         }
     }
 
@@ -70,6 +71,7 @@ class StoreArticle extends BaseComponent
             'title' => ['required','string','max:100'],
             'main_image' => ['nullable','string','max:250'],
             'content' => ['required','string'],
+            'sub_title' => ['nullable','string','max:255'],
             'seo_keywords' => ['required','string','max:250'],
             'seo_description' => ['required','string','max:250'],
             'status' => ['required','in:'.Article::SHARED.','.Article::DEMO],
@@ -84,6 +86,7 @@ class StoreArticle extends BaseComponent
             'seo_description' => 'توضیحات سئو',
             'status' => 'وضعیت',
             'category' => 'دسته',
+            'sub_title' => 'زیر عنوان'
         ];
         $this->validate($fields,[],$messages);
 
@@ -95,6 +98,7 @@ class StoreArticle extends BaseComponent
         $model->seo_description = $this->seo_description;
         $model->status = $this->status;
         $model->category_id = $this->category;
+        $model->sub_title = $this->sub_title;
         $model->user_id = Auth::id();
         $model->save();
 

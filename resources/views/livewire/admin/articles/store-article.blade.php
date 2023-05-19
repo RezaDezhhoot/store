@@ -8,6 +8,7 @@
         <div class="card-body">
             <x-admin.forms.input type="text" id="slug" label="نام مستعار*" wire:model.defer="slug"/>
             <x-admin.forms.input type="text" id="title" label="عنوان*" wire:model.defer="title"/>
+            <x-admin.forms.input type="text" id="sub_title" label="زیر عنوان*" wire:model.defer="sub_title"/>
             <x-admin.forms.lfm-standalone id="main_image" label="تصویر*" :file="$main_image" type="image" required="true" wire:model="main_image"/>
             <x-admin.forms.full-text-editor id="content" label="محتوا*" wire:model.defer="content"/>
             <x-admin.forms.text-area label="کلمات کلیدی*" help="کلمات را با کاما از هم جدا کنید" wire:model.defer="seo_keywords" id="seo_keywords" />

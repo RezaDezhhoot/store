@@ -1,154 +1,141 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
     <!--header area start-->
-
-    <!--Offcanvas menu area start-->
-    <div class="off_canvars_overlay">
-    </div>
-    <div class="Offcanvas_menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="canvas_open">
-                        <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
-                    </div>
-                    <div class="Offcanvas_menu_wrapper">
-                        <div class="canvas_close">
-                            <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
-                        </div>
-                        <div class="support_info">
-                            <p>تلفن تماس: <a class="ltr-text" href="tel:{{$data['tel']}}">{{$data['tel']}}</a></p>
-                        </div>
-                        <div class="top_right text-right">
-                            <ul>
-                                @if(auth()->check())
-                                    <li><a href="{{ route('user.dashboard') }}"> حساب کاربری </a></li>
-                                    @if(auth()->user()->hasRole('admin'))
-                                        <li><a href="{{route('admin.dashboard')}}"> مدیریت </a></li>
-                                    @endif
-                                @else
-                                    <li><a href="{{ route('auth') }}"> ورود/ثبت نام </a></li>
-                                @endif
-                            </ul>
-                        </div>
-                        <div class="search_container">
-                            <form>
-                                <div class="hover_category">
-                                    <select class="select_option" wire:model.defer="category" name="select" id="categori1">
-                                        <option selected value="">همه دسته ها</option>
-                                        @foreach($data['categories'] as $category)
-                                            @if(is_null($category->parent_id))
-                                                <option value="{{$category->slug}}">{{$category->title}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="search_box">
-                                    <input  wire:keydown.enter="search()" wire:model.lazy="q" placeholder="جستجوی محصول ..." type="text">
-                                    <button wire:click="search()" type="button">جستجو</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="middel_right_info">
-                            <div class="mini_cart_wrapper">
-                                <a href="{{ route('cart') }}">
-                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                </a>
-                                @if(count(\App\Http\Livewire\Cart\Facades\Cart::content()) > 0)
-                                    <span class="cart_quantity">{{ count(\App\Http\Livewire\Cart\Facades\Cart::content()) }}</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div id="menu" class="text-left ">
-                            <ul class="offcanvas_main_menu">
-                                <x-site.nav-item title="صفحه اصلی" link="{{route('home')}}" :active="request()->routeIs('home')" />
-                                <x-site.nav-item title="فروشگاه" link="{{route('shop')}}" :active="request()->routeIs('shop')" />
-                                <x-site.nav-item title="اخبار و مقالات" link="{{route('articles')}}" :active="request()->routeIs('articles')" />
-                                <x-site.nav-item title="سوالات متداول" link="{{route('faq')}}" :active="request()->routeIs('faq')" />
-                                <x-site.nav-item title="درباره ما" link="{{route('about')}}" :active="request()->routeIs('about')" />
-                                <x-site.nav-item title=" تماس با ما" link="{{route('contact')}}" :active="request()->routeIs('contact')" />
-                            </ul>
-                        </div>
-
-                        <div class="Offcanvas_footer">
-                            <span><a href="mailto:{{ $data['email'] }}"><i class="fa fa-envelope-o"></i> {{ $data['email'] }}</a></span>
-                            <ul>
-                                @foreach($data['contact'] as $item)
-                                    <li><a class="{{$item['img']}}" href="{{$item['link']}}"><i class="fa fa-{{$item['img']}}"></i></a></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Offcanvas menu area end-->
-    <header>
-        <div class="main_header">
-            <!--header top start-->
-            <div class="header_top">
+    <header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 164, 'stickySetTop': '-164px', 'stickyChangeLogo': false}">
+        <div class="header-body border-0">
+            <div class="header-top header-top-default border-bottom-0 bg-color-primary">
                 <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="support_info">
-                                <p>تلفن تماس: <a class="ltr-text" href="tel:{{$data['tel']}}">{{$data['tel']}}</a></p>
+                    <div class="header-row py-2">
+                        <div class="header-column justify-content-start">
+                            <div class="header-row">
+                                <nav class="header-nav-top">
+                                    <ul class="nav nav-pills text-uppercase text-2">
+                                        <li class="nav-item nav-item-anim-icon">
+                                            <a class="nav-link pl-0 text-light opacity-7" href="{{route('about')}}"><i class="fas fa-angle-left"></i> درباره ما</a>
+                                        </li>
+                                        <li class="nav-item nav-item-anim-icon">
+                                            <a class="nav-link text-light opacity-7 pr-0" href="{{route('contact')}}"><i class="fas fa-angle-left"></i> تماس با ما</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="top_right text-right">
-                                <ul>
-                                    @if(auth()->check())
-                                        <li><a href="{{ route('user.dashboard') }}"> حساب کاربری </a></li>
-                                        @if(auth()->user()->hasRole('admin'))
-                                            <li><a href="{{route('admin.dashboard')}}"> مدیریت </a></li>
-                                        @endif
-                                    @else
-                                        <li><a href="{{ route('auth') }}"> ورود/ثبت نام </a></li>
-                                    @endif
+                        <div class="header-column justify-content-end">
+                            <div class="header-row">
+                                <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean social-icons-icon-light">
+                                    @foreach($data['contact'] as $item)
+                                        <li class="social-icons-{{$item['img']}}"><a target="_blank" href="{{$item['link']}}"><i class="fab fa-{{$item['img']}}"></i></a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--header top start-->
-            <!--header middel start-->
-            <div class="header_middle">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="logo">
-                                <a href="{{ route('home') }}"><img src="{{ asset($data['logo']) }}" alt=""></a>
+            <div class="header-container container">
+                <div class="header-row py-3">
+                    <div class="header-column justify-content-start w-50 order-md-1 d-none d-md-flex">
+                        <div class="header-row">
+                            <ul class="header-extra-info">
+                                <li class="m-0">
+                                    <div class="feature-box feature-box-style-2 align-items-center">
+                                        <div class="feature-box-icon">
+                                            <i class="far fa-clock text-7 p-relative top-1"></i>
+                                        </div>
+                                        <div class="feature-box-info">
+                                            <p class="pb-0 font-weight-semibold text-2">
+                                                شنبه - چهارشنبه: {{ $data['start_time'] }}
+                                                <br>
+                                                پنجشنبه - جمعه: {{ $data['end_time'] }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header-column justify-content-start justify-content-md-center order-1 order-md-2">
+                        <div class="header-row">
+                            <div class="header-logo">
+                                <a href="{{route('home')}}">
+                                    <img alt="لوگو" src="{{asset($data['logo'])}}">
+                                </a>
                             </div>
                         </div>
-                        <div class="col-lg-9 col-md-6">
-                            <div class="middel_right">
-                                <div class="search_container">
-                                    <form>
-                                        <div class="hover_category">
-                                            <select class="select_option" wire:model.defer="category" name="select" id="categori1">
-                                                <option selected value="">همه دسته ها</option>
-                                                @foreach($data['categories'] as $category)
-                                                    <option value="{{$category->slug}}">{{$category->title}}</option>
-                                                @endforeach
-                                            </select>
+                    </div>
+                    <div class="header-column justify-content-end w-50 order-2 order-md-3">
+                        <div class="header-row">
+                            <ul class="header-extra-info">
+                                <li class="m-0">
+                                    <div class="feature-box reverse-allres feature-box-style-2 align-items-center">
+                                        <div class="feature-box-icon">
+                                            <i class="fab fa-whatsapp text-7 p-relative"></i>
                                         </div>
-                                        <div class="search_box">
-                                            <input wire:keydown.enter="search()" wire:model.lazy="q" placeholder="جستجوی محصول ..." type="text">
-                                            <button wire:click="search()" type="button">جستجو</button>
+                                        <div class="feature-box-info">
+                                            <p class="pb-0 font-weight-semibold text-2"><span class="ltr-text">{{$data['tel']}}</span>
+                                            </p>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="middel_right_info">
-                                    <div class="mini_cart_wrapper">
-                                        <a href="{{ route('cart') }}">
-                                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                        </a>
-                                        @if(count(\App\Http\Livewire\Cart\Facades\Cart::content()) > 0)
-                                            <span class="cart_quantity">{{ count(\App\Http\Livewire\Cart\Facades\Cart::content()) }}</span>
-                                        @endif
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-nav-bar header-nav-bar-top-border bg-light">
+                <div class="header-container container">
+                    <div class="header-row">
+                        <div class="header-column">
+                            <div class="header-row justify-content-end">
+                                <div class="header-nav p-0">
+                                    <div class="header-nav header-nav-line header-nav-divisor header-nav-spaced justify-content-lg-center">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-effect-1 header-nav-main-sub-effect-1">
+                                            <nav class="collapse">
+                                                <ul class="nav nav-pills flex-column flex-lg-row" id="mainNav">
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('home') ? 'active' : ''}}" href="{{route('home')}}">
+                                                            خانه
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs(['articles','article']) ? 'active' : ''}}" href="{{route('articles')}}">
+                                                            اخبار و مقالات
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('faq') ? 'active' : ''}}" href="{{route('faq')}}">
+                                                            سوالات متداول
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('shop') ? 'active' : ''}}" href="{{route('shop')}}">
+                                                            فروشگاه
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="dropdown-submenu">
+                                                                <a class="dropdown-item" href="{{route('cart')}}">سبد خرید</a>
+                                                                <a class="dropdown-item" href="{{route('checkout')}}">تسویه حساب</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        @if(auth()->check())
+                                                            <a class="dropdown-item dropdown-toggle" href="{{ route('user.dashboard') }}"> حساب کاربری </a>
+                                                            <ul class="dropdown-menu">
+                                                                @if(auth()->user()->hasRole('admin'))
+                                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{route('admin.dashboard')}}"> مدیریت </a></li>
+                                                                @endif
+                                                                <li class="dropdown-item"><a class="dropdown-item" href="{{route('logout')}}"> خروج </a></li>
+                                                            </ul>
+                                                        @else
+                                                            <a class="dropdown-item dropdown-toggle {{request()->routeIs('auth') ? 'active' : ''}}" href="{{ route('auth') }}"> ورود/ثبت نام </a>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -156,103 +143,6 @@
                     </div>
                 </div>
             </div>
-            <!--header middel end-->
-            <!--header bottom satrt-->
-            <div class="main_menu_area">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-12">
-                            <div class="categories_menu {{url()->current() == route('home') ? 'categories_four' : '' }}" wire:ignore>
-                                <div class="categories_title">
-                                    <h2 class="categori_toggle">دسته‌بندی ها</h2>
-                                </div>
-                                <div class="categories_menu_toggle">
-                                    <ul>
-                                        @foreach($data['categories'] as $category)
-                                            <li {{ sizeof($category->childrenRecursive) > 0 ? 'class="menu_item_children"' : '' }} >
-                                                <a href="{{ route('shop',['category'=>$category->slug]) }}">{{ $category->title }}
-                                                    @if(sizeof($category->childrenRecursive) > 0)
-                                                        <i class="fa fa-angle-left"></i>
-                                                        <ul class="categories_mega_menu">
-                                                            @foreach($category->childrenRecursive as $item)
-                                                                <li class="menu_item_children">
-                                                                    <a href="{{ route('shop',['category'=>$item->slug]) }}">{{ $item->title }}</a>
-                                                                    @if(sizeof($item->childrenRecursive) > 0)
-                                                                        <ul class="categorie_sub_menu">
-                                                                            @foreach($item->childrenRecursive as $value)
-                                                                                <li><a href="{{ route('shop',['category'=>$value->slug]) }}">{{ $value->title }}</a></li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    @endif
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @endif
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-12">
-                            <div class="main_menu menu_position">
-                                <nav>
-                                    <ul>
-                                        <x-site.nav-item title="صفحه اصلی" link="{{route('home')}}" :active="request()->routeIs('home')" />
-                                        <x-site.nav-item title="فروشگاه" link="{{route('shop')}}" :active="request()->routeIs('shop')" />
-                                        <x-site.nav-item title="اخبار و مقالات" link="{{route('articles')}}" :active="request()->routeIs('articles')" />
-                                        <x-site.nav-item title="سوالات متداول" link="{{route('faq')}}" :active="request()->routeIs('faq')" />
-                                        <x-site.nav-item title="درباره ما" link="{{route('about')}}" :active="request()->routeIs('about')" />
-                                        <x-site.nav-item title=" تماس با ما" link="{{route('contact')}}" :active="request()->routeIs('contact')" />
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--header bottom end-->
         </div>
     </header>
-    <!--header area end-->
-    <!--sticky header area start-->
-    <div class="sticky_header_area sticky-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-3">
-                    <div class="logo">
-                        <a href="{{route('home')}}"><img src="{{ asset($data['logo']) }}" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="sticky_header_right menu_position">
-                        <div class="main_menu">
-                            <nav>
-                                <ul>
-                                    <x-site.nav-item title="صفحه اصلی" link="{{route('home')}}" :active="request()->routeIs('home')" />
-                                    <x-site.nav-item title="فروشگاه" link="{{route('shop')}}" :active="request()->routeIs('shop')" />
-                                    <x-site.nav-item title="اخبار و مقالات" link="{{route('articles')}}" :active="request()->routeIs('articles')" />
-                                    <x-site.nav-item title="سوالات متداول" link="{{route('faq')}}" :active="request()->routeIs('faq')" />
-                                    <x-site.nav-item title="درباره ما" link="{{route('about')}}" :active="request()->routeIs('about')" />
-                                    <x-site.nav-item title=" تماس با ما" link="{{route('contact')}}" :active="request()->routeIs('contact')" />
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="middel_right_info">
-                            <div class="mini_cart_wrapper">
-                                <a href="{{ route('cart') }}">
-                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                </a>
-                                @if(count(\App\Http\Livewire\Cart\Facades\Cart::content()) > 0)
-                                    <span class="cart_quantity">{{ count(\App\Http\Livewire\Cart\Facades\Cart::content()) }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--sticky header area end-->
 </div>

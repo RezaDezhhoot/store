@@ -1,220 +1,192 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml" wire:init="$set('readyToLoad', true)">
-    <x-site.breadcrumbs :data="$address" />
 
-    <!--product details start-->
-    <div class="product_details mt-60 mb-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6" wire:ignore>
-                    <div class="product-details-tab">
-                        <div id="img-1" class="zoomWrapper single-zoom">
-                            <a href="#">
-                                <img id="zoom1" src="{{ asset($product->image) }}" data-zoom-image="{{ asset($product->image) }}" alt="{{ $product->title }}">
-                            </a>
-                        </div>
-                        <div class="single-zoom-thumb">
-                            <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                @foreach(explode(',',$product->media) as $item)
-                                    <li>
-                                        <a class="elevatezoom-gallery active" data-update="{{asset($item)}}" data-image="{{asset($item)}}" data-zoom-image="{{asset($item)}}">
-                                            <img src="{{asset($item)}}" alt="{{ $product->title }}">
-                                        </a>
+    <div role="main" class="main shop">
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
 
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="col-md-12 align-self-center p-static order-2 text-center">
+                        <h1 class="text-dark font-weight-bold text-8">{{ $product->title }}</h1>
+                    </div>
+
+                    <div class="col-md-12 align-self-center order-1">
+                        <x-site.breadcrumbs :data="$address" />
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="product_d_right">
-                        <form wire:submit.prevent="addToCart()">
+            </div>
+        </section>
+        <div class="container">
 
-                            <h1>{{ $product->title }}</h1>
+            <div class="row">
+                <div class="col-lg-6">
 
-                            <div class=" product_ratting">
-                                <ul>
-                                    @for($i = 0;$i<floor($product->score);$i++)
-                                        <li><span><i class="fa fa-star"></i></span></li>
-                                    @endfor
-                                    <li class="review"><a> (امتیاز مشتریان) </a></li>
+                    <div class="owl-carousel owl-theme" wire:ignore data-plugin-options="{'items': 1}">
+                        <div>
+                            <img alt="{{ $product->title }}" class="img-fluid" src="{{ asset($product->image) }}">
+                        </div>
+                        @foreach(explode(',',$product->media) as $item)
+                            <div>
+                                <img alt="{{ $product->title }}" class="img-fluid" src="{{asset($item)}}">
+                            </div>
+                        @endforeach
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="summary entry-summary">
+
+                        <h1 class="mb-2 font-weight-bold text-7">{{$product->title}}</h1>
+
+                        <p class="price">
+                            @if($product->hasReduction())
+                                <del>
+                                            <span  class="amount">
+                                                {{ number_format($price) }}تومان
+                                            </span>
+                                        </del>
+                                <ins>
+                                    <span class="amount">{{ number_format($priceWithDiscount) }} تومان </span>
+                                </ins>
+                            @else
+                                <span class="amount">
+                                            {{ number_format($price) }}تومان
+                                        </span>
+                            @endif
+                        </p>
+
+                        <p class="mb-4">
+                            {!! $product->short_description !!}
+                        </p>
+
+                        <form wire:submit.prevent="addToCart()" class="cart">
+                            <div class="quantity quantity-lg">
+                                <input type="button" wire:click="$set('quantity',{{max(1,$quantity - 1)}})" class="minus" value="-">
+                                <input type="text" wire:model="quantity" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                <input type="button" wire:click="$set('quantity',{{$quantity + 1}})" class="plus" value="+">
+                            </div>
+                            @error('quantity')
+                                <small class="text-danger">{{$message}}</small>
+                            @enderror
+                            <button wire:loading.attr="disabled" type="submit" class="btn btn-primary btn-modern text-uppercase">افزودن به سبد</button>
+                        </form>
+
+                        <div class="product-meta">
+                            @if(!is_null($product->category) && !empty($product->category))
+                                <span class="posted-in">دسته: <a rel="tag" href="{{ route('shop',$product->category->slug) }}">{{ $product->category->title }}</a></span>
+                            @endif
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="tabs tabs-product mb-2">
+                        <ul class="nav nav-tabs d-block d-sm-flex">
+                            <li class="nav-item active"><a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">توضیحات</a></li>
+                            <li class="nav-item"><a class="nav-link py-3 px-4" href="#productInfo" data-toggle="tab">اطلاعات تکمیلی</a></li>
+                            <li class="nav-item"><a class="nav-link py-3 px-4" href="#productReviews" data-toggle="tab"> نظرات {{ $comments->count() == 0 ? '' : $comments->count() }}</a></li>
+                        </ul>
+                        <div class="tab-content p-0">
+                            <div class="tab-pane p-4 active" id="productDescription">
+                                {!! $product->description !!}
+                            </div>
+                            <div class="tab-pane p-4" id="productInfo">
+                                {!! $product->details !!}
+                            </div>
+                            <div class="tab-pane p-4" id="productReviews">
+                                <ul class="comments">
+                                    @forelse($comments as $item)
+                                        <li>
+                                            <div class="comment">
+                                                <div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+                                                    <i class="fa fa-4x fa-user"></i>
+                                                </div>
+                                                <div class="comment-block">
+                                                    <div class="comment-arrow"></div>
+                                                    <span class="comment-by">
+																<strong>{{ $item->user->user_name }}</strong>
+															</span>
+                                                    {!! $item->comment !!}
+                                                    <span class="date float-right">{{ $item->date }}</span>
+                                                </div>
+                                            </div>
+                                            @if(!is_null($item->answer))
+                                                <ul class="comments reply">
+                                                    <li>
+                                                        <div class="comment">
+                                                            <div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+                                                                <i class="fa fa-4x fa-user"></i>
+                                                            </div>
+                                                            <div class="comment-block">
+                                                                <div class="comment-arrow"></div>
+                                                                <span class="comment-by">
+																		<strong>پشتیبانی </strong>
+																	</span>
+                                                                <p>
+                                                                    {!! $item->answer !!}
+                                                                </p>
+                                                                <span class="date float-right">{{ $item->updateDate }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @empty
+                                        <p class="alert alert-info">هیچ نظری ثبت نشده است</p>
+                                    @endforelse
                                 </ul>
                             </div>
-                            <div class="price_box">
-                                @if($product->hasReduction())
-                                    <span class="current_price">
-                                            {{ number_format($price) }}تومان
-                                        </span>
-                                    <span class="old_price">{{ number_format($priceWithDiscount) }} تومان </span>
-
-                                @else
-                                    <span class="current_price">
-                                            {{ number_format($price) }}تومان
-                                        </span>
-                                @endif
-
-                            </div>
-                            <div class="product_desc">
-                                <p>
-                                    {!! $product->short_description !!}
-                                </p>
-                            </div>
-                            <div class="product_variant color">
-                                @include('livewire.site.components.products.form-builder')
-                            </div>
-                            <div class="product_variant quantity">
-                                <label for="quantity">تعداد</label>
-                                <input id="quantity" min="1" wire:model="quantity" max="100" value="1" type="number">
-                                @error('quantity')
-                                    <small class="text-danger">{{$message}}</small>
-                                @enderror
-                                <button class="button" wire:loading.attr="disabled" type="submit">افزودن به سبد</button>
-                            </div>
-                            <div class="product_meta">
-                                @if(!is_null($product->category) && !empty($product->category))
-                                    <span>دسته: <a href="{{ route('shop',$product->category->slug) }}">{{ $product->category->title }}</a></span>
-                                @endif
-                            </div>
-
-                        </form>
-                        <div class="priduct_social">
-                            <ul>
-                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" title="facebook"><i class="fa fa-facebook"></i>فیسبوک</a></li>
-                                <li><a class="twitter" href="https://twitter.com/intent/tweet?url={{ url()->current() }}" title="twitter"><i class="fa fa-twitter"></i>توییتر</a></li>
-                                <li><a class="telegram" href="https://t.me/share/url?url={{ url()->current() }}" title="telegram"><i class="fa fa-telegram"></i>تلگرام</a></li>
-                            </ul>
                         </div>
-
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <hr class="solid my-5">
+
+                    <h4 class="mb-4"><strong>محصولات</strong> مرتبط</h4>
+                    <div class="masonry-loader masonry-loader-showing">
+                        <div class="row products product-thumb-info-list mt-3" data-plugin-masonry data-plugin-options="{'layoutMode': 'fitRows'}">
+                            @foreach($related as $item)
+                                <div class="col-sm-6 col-lg-4 product">
+                                    <span class="product-thumb-info border-0">
+											<a href="{{ route('product',$product->slug) }}" class="add-to-cart-product bg-color-primary">
+												<span class="text-1">افزودن به سبد</span>
+											</a>
+											<a href="{{ route('product',$product->slug) }}">
+												<span class="product-thumb-info-image">
+													<img alt="{{ $product->title }}" class="img-fluid" src="{{ asset($product->image) }}">
+												</span>
+											</a>
+											<span class="product-thumb-info-content product-thumb-info-content pl-0 bg-color-light">
+												<a href="{{ route('product',$product->slug) }}">
+													<h4 class="text-4 text-primary">{{ $product->title }}</h4>
+													<span class="price">
+                                                        @if($product->hasReduction())
+                                                            <del><span class="amount">{{ number_format($product->price()) }} تومان</span></del>
+                                                            <ins><span class="amount text-dark font-weight-semibold">{{ number_format($product->price) }} تومان</span></ins>
+                                                        @else
+                                                            <span class="amount text-dark font-weight-semibold">{{ number_format($product->price()) }} تومان</span>
+                                                        @endif
+													</span>
+												</a>
+											</span>
+										</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <!--product details end-->
-
-    <!--product info start-->
-    <div class="product_d_info mb-60" wire:ignore>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="product_d_inner">
-                        <div class="product_info_button">
-                            <ul class="nav" role="tablist">
-                                <li>
-                                    <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">توضیحات</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">مشخصات فنی</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"> نطرات {{ $comments->count() == 0 ? '' : $comments->count() }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="info" role="tabpanel">
-                                <div class="product_info_content">
-                                    {!!  $product->description !!}
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="sheet" role="tabpanel">
-                                <div class="product_d_table">
-                                    {!!  $product->details !!}
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="reviews" role="tabpanel">
-                                <div class="reviews_wrapper">
-                                    @foreach($comments as $item)
-                                        <div class="reviews_comment_box">
-                                            <div class="comment_thmb">
-                                                <img src="{{asset('assets/img/blog/comment2.jpg')}}" alt="">
-                                            </div>
-                                            <div class="comment_text">
-                                                <div class="reviews_meta">
-                                                    <div class="star_rating">
-                                                        <ul>
-                                                            @for($i = 0;$i<floor($item->rating);$i++)
-                                                                <li><span><i class="ion-ios-star"></i></span></li>
-                                                            @endfor
-                                                        </ul>
-                                                    </div>
-                                                    <p><strong>{{ $item->user->user_name }} </strong> - {{ $item->date }}</p>
-                                                </div>
-                                                <p>
-                                                    {!! $item->comment !!}
-                                                </p>
-                                                @if(!is_null($item->answer))
-                                                    <div class="comment_list list_two">
-                                                        <div class="comment_thumb">
-                                                            <img src="{{asset('assets/img/blog/comment3.png.jpg')}}" alt="">
-                                                        </div>
-                                                        <div class="comment_content">
-                                                            <div class="comment_meta">
-                                                                <h5><a>پشتیبانی</a></h5>
-                                                                <span>{{ $item->updateDate }}</span>
-                                                            </div>
-                                                            <p>
-                                                                {!! $item->answer !!}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--product info end-->
-
-    <section class="product_area related_products" wire:ignore>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title">
-                        <h2>محصولات مرتبط	</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="product_carousel product_column5 owl-carousel">
-                @foreach($related as $item)
-                    <article class="single_product">
-                        <figure>
-                            <div class="product_thumb">
-                                <a class="primary_img" href="{{ route('product',$item->slug) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title }}"></a>
-                                <a class="secondary_img" href="{{ route('product',$item->slug) }}"><img src="{{ asset($item->image) }}" alt="{{ $item->title }}"></a>
-                            </div>
-                            <figcaption class="product_content">
-                                <div class="price_box">
-                                    @if(empty($item->form))
-                                        @if($item->hasReduction())
-                                            <span class="current_price">
-                                            {{ number_format($product->price()) }}تومان
-                                        </span>
-                                            <span class="old_price">{{ number_format($item->price) }} تومان </span>
-                                        @else
-                                            <span class="current_price">
-                                            {{ number_format($item->price) }}تومان
-                                        </span>
-                                        @endif
-                                    @else
-                                        <span class="current_price">
-                                        قیمت متغیر
-                                    </span>
-                                    @endif
-                                </div>
-                                <h3 class="product_name"><a href="{{ route('product',$item->slug) }}">{{ $item->title }}</a></h3>
-                            </figcaption>
-                        </figure>
-                    </article>
-                @endforeach
-            </div>
-        </div>
-    </section>
 </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Site\Home;
 
 use App\Http\Livewire\BaseComponent;
+use App\Models\Article;
+use App\Models\Product;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
@@ -11,7 +13,7 @@ use App\Models\Setting;
 
 class IndexHome extends BaseComponent
 {
-    public $content , $funFacts = [] , $data;
+    public $content , $funFacts = [] , $data , $about , $articles = [] , $products;
     public function mount()
     {
         SEOMeta::setTitle(Setting::getSingleRow('title'),false);
@@ -27,21 +29,27 @@ class IndexHome extends BaseComponent
         JsonLd::addImage(Setting::getSingleRow('logo'));
         $this->data['homeSlider'] = Setting::getSingleRow('homeSlider',[]);
         $content = Setting::getSingleRow('homeContent',[]);
+        $this->about = Setting::getSingleRow('homeAbout');
+        $this->data['img1'] = Setting::getSingleRow('homeImg1');
+        $this->data['img2'] = Setting::getSingleRow('homeImg2');
+        $this->data['img3'] = Setting::getSingleRow('homeImg3');
         $send = [];
+        $this->articles = Article::query()->latest()->published()->take(4)->get();
+        $this->products = Product::query()->latest()->get();
         $i = 0;
-        foreach ($content as $key => $value)
-        {
-            if ($value['category'] <> 'banners')
-            {
-                $model = Setting::models()[$value['category']];
-                $send[$i] = $value;
-                $send[$i]['content'] = $model::findMany($value['contentCase']);
-
-            } else
-                $send[$i] = $value;
-            $i++;
-        }
-        $this->content = collect($send)->sortBy('view');
+//        foreach ($content as $key => $value)
+//        {
+//            if ($value['category'] <> 'banners')
+//            {
+//                $model = Setting::models()[$value['category']];
+//                $send[$i] = $value;
+//                $send[$i]['content'] = $model::findMany($value['contentCase']);
+//
+//            } else
+//                $send[$i] = $value;
+//            $i++;
+//        }
+//        $this->content = collect($send)->sortBy('view');
     }
     public function render()
     {

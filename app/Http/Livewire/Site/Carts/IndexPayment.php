@@ -299,7 +299,6 @@ class IndexPayment extends BaseComponent
                 'name' => ['required', 'string', 'max:250'],
                 'phone' => ['required', 'string', 'size:11'],
                 'description' => ['nullable', 'string', 'max:16500'],
-                'useWallet' => ['required', 'boolean'],
                 'province' => ['required', 'max:250' , 'in:'.implode(',',array_keys($this->data['province']))],
                 'city' => ['required', 'max:250' , 'in:'.implode(',',array_keys($this->data['city']))],
                 'postal_code' => ['required', 'size:10'],
@@ -311,7 +310,6 @@ class IndexPayment extends BaseComponent
                 'name' => 'نام',
                 'phone' => 'موبایل',
                 'description' => 'توضیحات',
-                'useWallet' => 'کیف پول',
                 'province' => 'استان',
                 'city' => 'شهر',
                 'postal_code' => 'کد پستی',
@@ -319,7 +317,7 @@ class IndexPayment extends BaseComponent
                 'selectedSend' => 'روش ارسال'
             ]
         );
-
+        dd(1);
         if ($this->useVoucher && ! Reduction::where('code', $this->voucherCode)->exists()){
             $this->useVoucher = false;
             $this->voucherCode = null;
