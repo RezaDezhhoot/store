@@ -98,6 +98,6 @@ Route::get('/logout', function (){
     return redirect()->route('auth');
 })->name('logout');
 // file manager
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','role:admin','schedule']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+//Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','role:admin','schedule']], function () {
+//    \UniSharp\LaravelFilemanager\Lfm::routes();
+//});
