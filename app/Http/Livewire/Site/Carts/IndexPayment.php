@@ -317,7 +317,6 @@ class IndexPayment extends BaseComponent
                 'selectedSend' => 'روش ارسال'
             ]
         );
-        dd(1);
         if ($this->useVoucher && ! Reduction::where('code', $this->voucherCode)->exists()){
             $this->useVoucher = false;
             $this->voucherCode = null;

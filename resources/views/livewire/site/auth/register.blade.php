@@ -1,67 +1,56 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
-    <div class="customer_login mt-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="account_form register">
-                        <h2>ثبت نام</h2>
-                        <form wire:submit.prevent="register">
-                           <div class="row">
-                               <div class="col-12 col-lg-6 col-md-6">
-                                   <div class="form-group">
-                                       <label for="name">نام کامل <span>*</span></label>
-                                       <input wire:model.defer="name" id="name" type="text" class="form-control" placeholder="نام کامل"  />
-                                       @error('name')
+    <div class="row">
+        <div class="col">
+            <div class="featured-boxes">
+                <div class="row">
+                    <div class="col-12 col-lg-8 mx-auto">
+                        <div class="featured-box featured-box-primary text-left mt-2">
+                            <div class="box-content">
+                                <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3">ثبت نام</h4>
+                                <form wire:submit.prevent="register">
+                                    <div class="form-row">
+                                        <div class="form-group col-12 col-lg-6">
+                                            <label class="font-weight-bold text-dark text-2">نام کامل</label>
+                                            <input type="text"  required="" wire:model.defer="name"  value="" id="name" class="form-control form-control-lg text-left" dir="ltr">
+                                            @error('name')
                                             <span class="text-danger">{{$message}}</span>
-                                       @enderror
-                                   </div>
-                               </div>
-                               <div class="col-12 col-lg-6 col-md-6">
-                                   <div class="form-group">
-                                       <label for="user_name">نام کاربری <span>*</span></label>
-                                       <input wire:model.defer="user_name" id="user_name" type="text" class="form-control" placeholder="نام کاربری"  />
-                                       @error('user_name')
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-12 col-lg-6">
+                                            <label class="font-weight-bold text-dark text-2">شماره همراه</label>
+                                            <input type="text"  required="" wire:model.defer="phone_number"  value="" id="phone_number" class="form-control form-control-lg text-left" dir="ltr">
+                                            @error('phone_number')
                                             <span class="text-danger">{{$message}}</span>
-                                       @enderror
-                                   </div>
-                               </div>
-                               <div class="col-12">
-                                   <div class="form-group">
-                                       <label for="phone_number">نام کاربری <span>*</span></label>
-                                       <input wire:model.defer="phone_number" id="phone_number" type="text" class="form-control" placeholder="شماره همراه"  />
-                                       @error('phone_number')
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-12 col-lg-6">
+                                            <label class="font-weight-bold text-dark text-2">رمز عبور</label>
+                                            <input type="password" wire:model.defer="password" id="password" value="" class="form-control form-control-lg text-left" dir="ltr">
+                                            @error('password')
                                             <span class="text-danger">{{$message}}</span>
-                                       @enderror
-                                   </div>
-                               </div>
-                               <div class="col-12 col-lg-6 col-md-6">
-                                   <div class="form-group">
-                                       <label for="password">رمز عبور <span>*</span></label>
-                                       <input wire:model.defer="password" id="password" type="password" class="form-control" placeholder="رمز عبور"  />
-                                       @error('password')
-                                        <span class="text-danger">{{$message}}</span>
-                                       @enderror
-                                   </div>
-                               </div>
-                               <div class="col-12 col-lg-6 col-md-6">
-                                   <div class="form-group">
-                                       <label for="password_confirmation">تایید رمز عبور <span>*</span></label>
-                                       <input wire:model.defer="password_confirmation" id="password_confirmation" type="password" class="form-control" placeholder="رمز عبور"  />
-                                       @error('password_confirmation')
-                                       <span class="text-danger">{{$message}}</span>
-                                       @enderror
-                                   </div>
-                               </div>
-                           </div>
-                            <div class="login_submit">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <a style="float: right" href="{{ route('auth',['mode'=>'login']) }}">قبلا  قبت نام کرده اید؟ هم اکنون وارد شوید</a>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-12 col-lg-6">
+                                            <label class="font-weight-bold text-dark text-2"> تاید رمز عبور</label>
+                                            <input type="password" wire:model.defer="password_confirmation" id="password_confirmation" value="" class="form-control form-control-lg text-left" dir="ltr">
+                                            @error('password_confirmation')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">قبت نام</button>
+                                    <div class="form-row">
+                                        <div class="form-group col-lg-6">
+                                            <div class="col-12">
+                                                <a  href="{{ route('auth',['mode'=>'login']) }}">قبلا  قبت نام کرده اید؟ هم اکنون وارد شوید</a>
+                                            </div>
+                                            <div>
+                                                <input type="submit" wire:loading.attr="disabled" value="ثبت نام" class="btn btn-primary" data-loading-text="در حال بارگذاری ...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

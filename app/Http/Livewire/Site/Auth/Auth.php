@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Livewire\BaseComponent;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Sends\SendMessages;
+use Illuminate\Support\Str;
 
 class Auth extends BaseComponent
 {
@@ -85,25 +86,25 @@ class Auth extends BaseComponent
         $user = User::where('phone', $this->phone)->orWhere('user_name',$this->phone)->first();
 
         if (!is_null($user)) {
-            if ($user->status == User::NEW || $user->status == User::NOT_CONFIRMED) {
-                $this->sendSMS();
-                if (Hash::check($this->password, $user->otp) && $this->sms === true) {
-                    $user->status = User::CONFIRMED;
-                    $user->save();
-                    \Illuminate\Support\Facades\Auth::login($user,true);
-                    request()->session()->regenerate();
-                    RateLimiter::clear($rateKey);
-                    $send = new SendMessages();
-                    $message = $this->createText('login',$user);
-                    $send->sends($message,$user,Notification::AUTH,$user->id);
-
-                    if ( \Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
-                        return redirect()->intended(route('admin.dashboard'));
-                    else
-                        return redirect()->intended(route('user.dashboard'));
-                } else
-                    return $this->addError('password','کد تایید یا شماره همراه اشتباه می باشد.');
-            } else {
+//            if ($user->status == User::NEW || $user->status == User::NOT_CONFIRMED) {
+//                $this->sendSMS();
+//                if (Hash::check($this->password, $user->otp) && $this->sms === true) {
+//                    $user->status = User::CONFIRMED;
+//                    $user->save();
+//                    \Illuminate\Support\Facades\Auth::login($user,true);
+//                    request()->session()->regenerate();
+//                    RateLimiter::clear($rateKey);
+//                    $send = new SendMessages();
+//                    $message = $this->createText('login',$user);
+//                    $send->sends($message,$user,Notification::AUTH,$user->id);
+//
+//                    if ( \Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+//                        return redirect()->intended(route('admin.dashboard'));
+//                    else
+//                        return redirect()->intended(route('user.dashboard'));
+//                } else
+//                    return $this->addError('password','کد تایید یا شماره همراه اشتباه می باشد.');
+//            } else {
                 if (Hash::check($this->password, $user->password) || (Hash::check($this->password, $user->otp) && $this->sms === true)) {
                     \Illuminate\Support\Facades\Auth::login($user,true);
                     request()->session()->regenerate();
@@ -117,7 +118,7 @@ class Auth extends BaseComponent
                         return redirect()->intended(route('user.dashboard'));
                 } else
                     return $this->addError('password','گذواژه یا شماره همراه اشتباه می باشد.');
-            }
+//            }
         } else
             return $this->addError('phone','این شماره همراه یافت نشد.');
     }
@@ -141,7 +142,7 @@ class Auth extends BaseComponent
         $user = User::create([
             'name' => $this->name,
             'phone' => $this->phone_number,
-            'user_name' => $this->user_name,
+            'user_name' => Str::uuid(),
             'password' => $this->password,
             'otp' => 1,
             'ip' => request()->ip(),
@@ -150,12 +151,12 @@ class Auth extends BaseComponent
         if (Setting::getSingleRow('registerGift') > 0)
             $user->deposit(Setting::getSingleRow('registerGift'), ['description' => 'هدیه ثبت نام', 'from_admin'=> true]);
 
-        $send = new SendMessages();
-        $message = $this->createText('signUp',$user);
-        $send->sends($message,$user,Notification::AUTH,$user->id);
+//        $send = new SendMessages();
+//        $message = $this->createText('signUp',$user);
+//        $send->sends($message,$user,Notification::AUTH,$user->id);
         $this->reset(['password']);
-        $this->phone = $this->phone_number;
-        $this->sendSMS();
+//        $this->phone = $this->phone_number;
+//        $this->sendSMS();
         $this->mode = self::MODE_LOGIN;
     }
 

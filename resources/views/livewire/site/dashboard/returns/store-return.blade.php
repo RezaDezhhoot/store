@@ -1,6 +1,16 @@
 <div xmlns:x-on="http://www.w3.org/1999/xhtml">
-    <x-site.breadcrumbs :data="$address" />
-    <section class="main_content_area">
+    <div role="main" class="main shop">
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12 align-self-center order-1">
+                        <x-site.breadcrumbs :data="$address" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main_content_area">
         <div class="container">
             <div class="account_dashboard">
                 <div class="row">
@@ -119,5 +129,5 @@
             </div>
         </div>
     </section>
-
+    </div>
 </div>

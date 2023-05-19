@@ -119,7 +119,7 @@
 									<a href="{{ route('product',$product->slug) }}" class="add-to-cart-product bg-color-primary">
 										<span class="text-1">افزودن به سبد</span>
 									</a>
-									<a href="s{{ route('product',$product->slug) }}">
+									<a href="{{ route('product',$product->slug) }}">
 										<span class="product-thumb-info-image">
 											<img alt="{{$product->title}}" class="img-fluid" src="{{asset($product->image)}}">
 										</span>

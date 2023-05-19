@@ -142,10 +142,43 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                                <div class="card card-default">
+                                    <div class="card-header">
+                                        <h4 class="card-title m-0">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#send">روش ارسال</a>
+                                        </h4>
+                                    </div>
+                                    <div id="send" wire:ignore.self class="collapse show">
+                                        <div class="card-body">
+                                            <div wire:ignore class="d-flex">
+                                                @foreach($sends as $key => $item)
+                                                    <div class="panel-default mx-2">
+                                                        <label class="d-flex align-items-center" data-toggle="collapse" data-target="#collapsedefult{{$item->id}}" aria-controls="collapsedefult{{$item->id}}">
+                                                            <input value="{{$item->id}}" type="radio" wire:model="selectedSend"> {{ $item->slug }}
+                                                            <img style="width: 40px" src="{{ asset($item->logo) }}" alt="">
+                                                        </label>
+
+                                                        <div id="collapsedefult{{$item->id}}" class="collapse one" data-parent="#accordion">
+                                                            <div class="card-body1">
+                                                                {!! $item->note !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            @error('selectedSend')
+                                            <span class="text-danger">
+                                        {{$message}}
+                                    </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             <div class="actions-continue mt-2">
                                 <div>
                                     <input type="submit" value="ثبت سفارش" name="proceed" class="btn btn-primary btn-modern text-uppercase mt-4 mb-5 mb-lg-0">
