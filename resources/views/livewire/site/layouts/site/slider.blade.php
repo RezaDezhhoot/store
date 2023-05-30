@@ -12,36 +12,6 @@
                         class="rev-slidebg">
 
                     <div
-                        class="tp-caption"
-                        data-x="center"
-                        data-hoffset="['-85','-85','-85','-130']"
-                        data-y="center"
-                        data-voffset="['-120','-120','-120','-180']"
-                        data-start="1000"
-                        data-transform_in="x:[-300%];opacity:0;s:500;"
-                        data-transform_idle="opacity:0.8;s:500;"><img src="{{asset('assets/img/slides/slide-title-border-light.png')}}" alt=""></div>
-
-                    <div
-                        class="tp-caption text-color-dark font-weight-semibold"
-                        data-x="center"
-                        data-y="center"
-                        data-voffset="['-122','-122','-122','-183']"
-                        data-start="700"
-                        data-fontsize="['22','22','22','40']"
-                        data-lineheight="['40','40','40','74']"
-                        data-transform_in="y:[-50%];opacity:0;s:500;">قالب پورتو</div>
-
-                    <div
-                        class="tp-caption"
-                        data-x="center"
-                        data-hoffset="['85','85','85','130']"
-                        data-y="center"
-                        data-voffset="['-120','-120','-120','-180']"
-                        data-start="1000"
-                        data-transform_in="x:[300%];opacity:0;s:500;"
-                        data-transform_idle="opacity:0.8;s:500;"><img src="{{asset('assets/img/slides/slide-title-border-light.png')}}" alt=""></div>
-
-                    <div
                         class="tp-caption font-weight-extra-bold text-color-dark secondary-font"
                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
                         data-x="center"
@@ -80,20 +50,6 @@
 
                 </li>
             </ul>
-        </div>
-    </div>
-    <div class="home-intro home-intro-quaternary" id="home-intro">
-        <div class="container">
-
-            <div class="row text-center">
-                <div class="col">
-                    <p class="mb-n1">
-                        سریع ترین راه برای گسترش کسب و کار شما با شرکت پیشرو در تکنولوژی
-                        <span class="sub-text">ویژگی ها و گزینه های ما را بررسی کنید.</span>
-                    </p>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

@@ -165,8 +165,9 @@ class Product extends Model
         $amount = 0;
         if ($this->discount_type == self::DISCOUNT_PERCENTAGE)
             $amount = $this->basePrice() - ($this->basePrice()*$this->discount_amount)/100;
-        else
-            $amount = $this->basePrice() - $this->discount_amount;
+        else if ($this->discount_type == self::DISCOUNT_FIXED) $amount = $this->basePrice() - $this->discount_amount;
+        else $amount = $this->basePrice();
+
         return max($amount, 0);
     }
 

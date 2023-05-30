@@ -23,8 +23,9 @@ class Header extends BaseComponent
         $this->data['email'] = Setting::getSingleRow('email');
         $this->data['contact'] = Setting::getSingleRow('contact',[]);
         $this->data['logo'] = Setting::getSingleRow('logo');
-        $this->data['start_time'] = Setting::getSingleRow('start_time');
-        $this->data['end_time'] = Setting::getSingleRow('end_time');
+        $this->data['title'] = Setting::getSingleRow('title');
+//        $this->data['start_time'] = Setting::getSingleRow('start_time');
+//        $this->data['end_time'] = Setting::getSingleRow('end_time');
         $this->data['categories'] = Category::with(['childrenRecursive'])->where([
             ['status',Category::AVAILABLE],
             ['type',Category::PRODUCT],

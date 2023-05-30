@@ -38,14 +38,11 @@
                             <ul class="header-extra-info">
                                 <li class="m-0">
                                     <div class="feature-box feature-box-style-2 align-items-center">
-                                        <div class="feature-box-icon">
-                                            <i class="far fa-clock text-7 p-relative top-1"></i>
-                                        </div>
-                                        <div class="feature-box-info">
+                                        <div class="">
+                                            <img class="p-relative w-50 top-1" alt="لوگو" src="{{asset($data['logo'])}}">
+                                            <br>
                                             <p class="pb-0 font-weight-semibold text-2">
-                                                شنبه - چهارشنبه: {{ $data['start_time'] }}
-                                                <br>
-                                                پنجشنبه - جمعه: {{ $data['end_time'] }}
+                                                {{$data['title']}}
                                             </p>
                                         </div>
                                     </div>
@@ -93,22 +90,12 @@
                                                 <ul class="nav nav-pills flex-column flex-lg-row" id="mainNav">
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle {{request()->routeIs('home') ? 'active' : ''}}" href="{{route('home')}}">
-                                                            خانه
-                                                        </a>
-                                                    </li>
-                                                    <li class="dropdown">
-                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs(['articles','article']) ? 'active' : ''}}" href="{{route('articles')}}">
-                                                            اخبار و مقالات
-                                                        </a>
-                                                    </li>
-                                                    <li class="dropdown">
-                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('faq') ? 'active' : ''}}" href="{{route('faq')}}">
-                                                            سوالات متداول
+                                                            صفحه نخست
                                                         </a>
                                                     </li>
                                                     <li class="dropdown">
                                                         <a class="dropdown-item dropdown-toggle {{request()->routeIs('shop') ? 'active' : ''}}" href="{{route('shop')}}">
-                                                            فروشگاه
+                                                            محصولات
                                                         </a>
                                                         <ul class="dropdown-menu">
                                                             <li class="dropdown-submenu">
@@ -119,7 +106,7 @@
                                                     </li>
                                                     <li class="dropdown">
                                                         @if(auth()->check())
-                                                            <a class="dropdown-item dropdown-toggle" href="{{ route('user.dashboard') }}"> حساب کاربری </a>
+                                                            <a class="dropdown-item dropdown-toggle" href="{{ route('user.dashboard') }}"> حساب مشتریان </a>
                                                             <ul class="dropdown-menu">
                                                                 @if(auth()->user()->hasRole('admin'))
                                                                     <li class="dropdown-item"><a class="dropdown-item" href="{{route('admin.dashboard')}}"> مدیریت </a></li>
@@ -127,8 +114,18 @@
                                                                 <li class="dropdown-item"><a class="dropdown-item" href="{{route('logout')}}"> خروج </a></li>
                                                             </ul>
                                                         @else
-                                                            <a class="dropdown-item dropdown-toggle {{request()->routeIs('auth') ? 'active' : ''}}" href="{{ route('auth') }}"> ورود/ثبت نام </a>
+                                                            <a class="dropdown-item dropdown-toggle {{request()->routeIs('auth') ? 'active' : ''}}" href="{{ route('auth') }}"> حساب مشتریان </a>
                                                         @endif
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('contact') ? 'active' : ''}}" href="{{route('contact')}}">
+                                                            تماس با ما
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('about') ? 'active' : ''}}" href="{{route('about')}}">
+                                                            درباره ما
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </nav>

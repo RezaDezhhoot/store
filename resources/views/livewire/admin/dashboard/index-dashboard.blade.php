@@ -203,7 +203,7 @@
                                         <label class="checkbox checkbox-lg checkbox-lg flex-shrink-0 mr-4">
                                             <input type="checkbox" value="1">
                                             <span style="width: 43px;height: 43px">
-                                                <img style="max-width: 100%;height: 100%;border-radius: 8px" src="{{asset($item->commentable->image ?? $item->commentable->main_image )}}" alt="">
+                                                <img style="max-width: 100%;height: 100%;border-radius: 8px" src="{{asset($item->commentable->image ?? $item->commentable->main_image ?? null )}}" alt="">
                                             </span>
                                         </label>
                                         <!--end::Checkbox-->
