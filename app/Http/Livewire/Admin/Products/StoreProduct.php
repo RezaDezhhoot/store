@@ -21,7 +21,7 @@ class StoreProduct extends BaseComponent
 
     public $title, $slug, $short_description, $description, $price , $quantity, $image = []
     , $score, $status, $category_id,
-        $discount_type, $discount_amount, $start_at, $expire_at,
+        $discount_type, $discount_amount = 0, $start_at, $expire_at,
         $seo_keyword, $seo_description , $media , $guarantee , $details;
 
     public $parameters = [],$parametersValue = [] , $hidden = true  , $filter_groups = [] , $selectedFilters = [];
