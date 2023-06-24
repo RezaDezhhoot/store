@@ -14,7 +14,7 @@ class BaseSetting extends BaseComponent
     public  $data = [] , $i = 1 , $registerGift , $notification  , $tel , $email, $address, $seoDescription , $seoKeyword ;
     public   $google , $password_length , $dos_count  , $valid_ticket_files  , $ticket_per_day , $miniAbout , $policy;
 
-    public $start_time , $end_time;
+    public $start_time , $end_time , $office ,  $links = [];
 
     public function mount()
     {
@@ -44,6 +44,8 @@ class BaseSetting extends BaseComponent
         $this->policy = Setting::getSingleRow('policy');
         $this->start_time = Setting::getSingleRow('start_time');
         $this->end_time = Setting::getSingleRow('end_time');
+        $this->office = Setting::getSingleRow('office');
+        $this->links = Setting::getSingleRow('links',[]);
     }
 
     public function render()
@@ -72,6 +74,7 @@ class BaseSetting extends BaseComponent
                 'notification' => ['nullable','string','max:250'],
                 'tel' => ['required','string','max:30'],
                 'address' => ['nullable','string','max:300'],
+                'office' => ['nullable','string','max:300'],
                 'email' => ['required','email','max:50'],
                 'subject' => ['nullable','array'],
                 'subject.*' => ['required','string','max:50'],
@@ -86,6 +89,9 @@ class BaseSetting extends BaseComponent
                 'dos_count' => ['required','integer','min:3'],
                 'end_time' => ['nullable','string','max:50'],
                 'start_time' => ['nullable','string','max:50'],
+                'links' => ['nullable','array'],
+                'links.*.link' => ['required','string','max:1000'],
+                'links.*.title' => ['required','string','max:1000'],
             ] , [] , [
                 'name' => 'نام سایت',
                 'title' => 'عنوان سایت',
@@ -96,6 +102,7 @@ class BaseSetting extends BaseComponent
                 'notification' => 'اعلان بالا صفحه',
                 'tel' => 'تلفن',
                 'address' => 'ادرس',
+                'office' => 'دفتر فروش',
                 'email' => 'ایمیل',
                 'subject' => 'موضوع ها',
                 'seoDescription' => 'توضیحات سئو',
@@ -106,7 +113,10 @@ class BaseSetting extends BaseComponent
                 'password_length' => 'حداقل طول پسورد',
                 'dos_count' => 'حداکثر امکان برای درخواست های پیوسته سمت سرور',
                 'start_time' => 'تایم کاری شنبه تا چهارشنبه',
-                'end_time' => 'تایم کاری پنجشنبه تا جمعه'
+                'end_time' => 'تایم کاری پنجشنبه تا جمعه',
+                'links' => 'لینک های دانلود',
+                'links.*.link' => 'لینک های دانلود',
+                'links.*.title' => 'لینک های دانلود',
             ]
         );
         Setting::updateOrCreate(['name' => 'subject'], ['value' => json_encode($this->subject)]);
@@ -130,6 +140,8 @@ class BaseSetting extends BaseComponent
         Setting::updateOrCreate(['name' => 'policy'], ['value' => $this->policy]);
         Setting::updateOrCreate(['name' => 'start_time'], ['value' => $this->start_time]);
         Setting::updateOrCreate(['name' => 'end_time'], ['value' => $this->end_time]);
+        Setting::updateOrCreate(['name' => 'office'], ['value' => $this->office]);
+        Setting::updateOrCreate(['name' => 'links'], ['value' => json_encode($this->links)]);
         $this->emitNotify('اطلاعات با موفقیت ثبت شد');
     }
 
@@ -146,5 +158,15 @@ class BaseSetting extends BaseComponent
     public function delete($key)
     {
         unset($this->contact[$key]);
+    }
+
+    public function deleteLink($key)
+    {
+        unset($this->links[$key]);
+    }
+
+    public function addLinks()
+    {
+        $this->links[] = '';
     }
 }

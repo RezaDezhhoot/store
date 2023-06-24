@@ -35,7 +35,8 @@ class IndexContact extends BaseComponent
             'contactText' => Setting::getSingleRow('contactText'),
             'tel' => Setting::getSingleRow('tel'),
             'email' => Setting::getSingleRow('email'),
-            'address' => Setting::getSingleRow('address')
+            'address' => Setting::getSingleRow('address'),
+            'office' => Setting::getSingleRow('office')
         ];
         $this->address = [
             'home' => ['link' => route('home') , 'label' => 'خانه'],

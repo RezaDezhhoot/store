@@ -25,7 +25,8 @@
                     <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="800">
                         <h4 class="mt-2 mb-1"><strong>دفتر</strong> ما</h4>
                         <ul class="list list-icons list-icons-style-2 mt-2">
-                            <li class="line-height-9"><i class="fas fa-map-marker-alt top-6"></i> <strong class="text-dark">آدرس:</strong> {{$data['address']}}</li>
+                            <li class="line-height-9"><i class="fas fa-map-marker-alt top-6"></i> <strong class="text-dark">ادرس کار خانه:</strong> {{$data['address']}}</li>
+                            <li class="line-height-9"><i class="fas fa-map-marker-alt top-6"></i> <strong class="text-dark">دفتر فروش:</strong> {{$data['office']}}</li>
                             <li class="line-height-9"><i class="fas fa-phone top-6"></i> <strong class="text-dark">تلفن:</strong> <span class="ltr-text">{{$data['tel']}}</span></li>
                             <li class="line-height-9"><i class="fas fa-envelope top-6"></i> <strong class="text-dark">ایمیل:</strong> <a href="mailto:{{$data['email']}}">{{$data['email']}}</a></li>
                         </ul>

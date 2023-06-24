@@ -20,6 +20,7 @@
             <x-admin.forms.input type="text" id="tel" label="تلفن*" wire:model.defer="tel"/>
             <x-admin.forms.input type="email" id="email" label="ایمیل*" wire:model.defer="email"/>
             <x-admin.forms.input type="text" id="address" label="ادرس" wire:model.defer="address"/>
+            <x-admin.forms.input type="text" id="office" label="دفتر فروش" wire:model.defer="office"/>
             <x-admin.forms.input type="number" id="password_length" label="حداقل طول پسورد*" wire:model.defer="password_length"/>
             <x-admin.forms.input type="number" id="dos_count" label="حداکثر امکان برای درخواست های پیوسته سمت سرور*" wire:model.defer="dos_count"/>
             <x-admin.button class="primary" content="افزودن لینک ارتباطی" wire:click="addLink()" />
@@ -27,18 +28,19 @@
             <x-admin.forms.input type="text" id="start_time" label="تایم کاری شنبه تا چهارشنبه" wire:model.defer="start_time"/>
             <x-admin.forms.input type="text" id="end_time" label="تایم کاری پنجشنبه تا حمعه" wire:model.defer="end_time"/>
 
-
-        @foreach($contact as $key => $item)
-                <div class="form-group" style="display: flex;align-items: center">
-                    <div style="padding: 5px">
-                        <input class="form-control" id="{{ $key }}image" type="text" placeholder="تصویر" wire:model.defer="contact.{{$key}}.img">
-                    </div>
-                    <div style="padding: 5px">
-                        <input class="form-control" id="{{ $key }}title" type="text" placeholder="لیتک" wire:model.defer="contact.{{$key}}.link">
-                    </div>
-                    <div><button class="btn btn-danger" wire:click="delete({{ $key }})">حذف</button></div>
+            <x-admin.form-section label="لینک های اضافی">
+                <div class="border p-3">
+                    <x-admin.button class="btn btn-light-primary font-weight-bolder btn-sm" content="افزودن لینک" wire:click="addLinks()" />
+                    @foreach($links as $key => $item)
+                        <div class="form-group d-flex align-items-center col-12">
+                            <input class="form-control col-5" id="{{ $key }}link-title" type="text" placeholder="عنوان" wire:model.defer="links.{{$key}}.title">
+                            <input class="form-control col-5" id="{{ $key }}link" type="text" placeholder="لینک" wire:model.defer="links.{{$key}}.link">
+                            <div><button class="btn btn-light-danger font-weight-bolder btn-sm" wire:click="deleteLinks({{ $key }})">حذف</button></div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+            </x-admin.form-section>
+
             <x-admin.forms.text-area id="copyRight" label="متن کپی رایت*" wire:model.defer="copyRight"/>
             <x-admin.form-section label="موضوعات تیکت">
                 <x-admin.button class="primary" content="افزودن موضوع" wire:click="addSubject()" />

@@ -11,15 +11,23 @@ use Illuminate\Support\Facades\RateLimiter;
 class Footer extends BaseComponent
 {
     public $data = [], $email;
-    public function render()
+
+    public function mount()
     {
         $this->data['tel'] = Setting::getSingleRow('tel');
+        $this->data['title'] = Setting::getSingleRow('title');
         $this->data['email'] = Setting::getSingleRow('email');
         $this->data['address'] = Setting::getSingleRow('address');
         $this->data['logo'] = Setting::getSingleRow('logo');
         $this->data['miniAbout'] = Setting::getSingleRow('miniAbout');
         $this->data['copyRight'] = Setting::getSingleRow('copyRight');
         $this->data['contact'] = Setting::getSingleRow('contact',[]);
+        $this->data['links'] = Setting::getSingleRow('links',[]);
+    }
+
+    public function render()
+    {
+
         return view('livewire.site.layouts.site.footer');
     }
 
