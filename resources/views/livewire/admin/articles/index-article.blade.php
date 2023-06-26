@@ -10,6 +10,7 @@
                         <thead>
                         <tr>
                             <th>شماره</th>
+                            <th>لینک</th>
                             <th>نام مستعار</th>
                             <th>عنوان</th>
                             <th>وضعیت</th>
@@ -22,6 +23,7 @@
                         @forelse($articles as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
+                                <td><a href="{{ asset('article',$item->slug) }}">{{ asset('article',$item->slug) }}</a></td>
                                 <td>{{ $item->slug }}</td>
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item::getStatus()[$item->status] }}</td>
@@ -33,7 +35,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <td class="text-center" colspan="6">
+                            <td class="text-center" colspan="10>
                                 دیتایی جهت نمایش وجود ندارد
                             </td>
                         @endforelse

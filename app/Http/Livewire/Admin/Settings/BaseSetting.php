@@ -168,7 +168,7 @@ class BaseSetting extends BaseComponent
         unset($this->contact[$key]);
     }
 
-    public function deleteLink($key)
+    public function deleteLinks($key)
     {
         unset($this->links[$key]);
     }
@@ -178,7 +178,7 @@ class BaseSetting extends BaseComponent
         $this->links[] = '';
     }
 
-    public function deleteLinkR($key)
+    public function deleteLinksR($key)
     {
         unset($this->linksR[$key]);
     }
