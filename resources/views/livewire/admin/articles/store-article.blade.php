@@ -14,6 +14,7 @@
             <x-admin.forms.text-area label="کلمات کلیدی*" help="کلمات را با کاما از هم جدا کنید" wire:model.defer="seo_keywords" id="seo_keywords" />
             <x-admin.forms.text-area label="توضیحات سئو*" wire:model.defer="seo_description" id="seo_description" />
             <x-admin.forms.dropdown id="status" :data="$data['status']" label="وضعیت*" wire:model.defer="status"/>
+            <x-admin.forms.dropdown id="type" :data="$data['type']" label="نوع نوشته*" wire:model.defer="type"/>
             <x-admin.forms.dropdown id="category_id" :data="$data['category']" label="دسته" wire:model.defer="category"/>
 
         </div>

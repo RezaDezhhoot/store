@@ -23,7 +23,17 @@ class Article extends Model
     const SHARED = 'shared';
     const DEMO = 'demo';
 
+    const ARTICLE = 'article' , TEXT = 'text';
+
     public $appends = ['day','month'];
+
+    public static function getType()
+    {
+        return [
+            self::ARTICLE => 'عادی',
+            self::TEXT => 'ویژه'
+        ];
+    }
 
     public function comments()
     {
@@ -36,6 +46,11 @@ class Article extends Model
             self::SHARED => 'منتشر شده',
             self::DEMO => 'پیشنویش',
         ];
+    }
+
+    public function getTypeLabelAttribute()
+    {
+        return self::getType()[$this->type];
     }
 
     public function category()
@@ -71,5 +86,9 @@ class Article extends Model
     public function scopePublished($q)
     {
         return $q->where('status',self::SHARED);
+    }
+
+    public function scopeArticle($q) {
+        return $q->where('type',self::ARTICLE);
     }
 }

@@ -43,7 +43,7 @@ class IndexArticles extends BaseComponent
 
     public function render()
     {
-        $this->data['articles'] = Article::where('status',Article::SHARED)->when($this->category,function ($query){
+        $this->data['articles'] = Article::query()->article()->where('status',Article::SHARED)->when($this->category,function ($query){
             $category = Category::with(['childrenRecursive'])->where([
                 ['type',Category::ARTICLE],
                 ['status',Category::AVAILABLE],

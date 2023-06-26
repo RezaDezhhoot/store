@@ -9,13 +9,13 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="row mt-5 mt-lg-0">
-                            <div class="col-md-8 col-lg-6 text-center text-lg-left mx-auto">
-                                <img class="img-fluid m-3 my-0 mt-lg-5 pt-lg-5 appear-animation" src="{{$data['img1']}}" alt="تصاویر شرکت" data-appear-animation="expandIn" data-appear-animation-delay="200">
+                            <div class=" col-12 text-center text-lg-left mx-auto">
+                                <img class="img-fluid m-3 my-0  appear-animation" src="{{$data['img1']}}" alt="تصاویر شرکت" data-appear-animation="expandIn" data-appear-animation-delay="200">
                             </div>
-                            <div class="col-md-8 col-lg-6 pl-lg-0 text-center text-lg-left mx-auto">
-                                <img class="img-fluid m-3 my-0 appear-animation" alt="تصاویر شرکت" src="{{$data['img2']}}"  data-appear-animation="expandIn" data-appear-animation-delay="400">
-                                <img class="img-fluid m-3 my-0 appear-animation" src="{{$data['img3']}}" alt="تصاویر شرکت" data-appear-animation="expandIn" data-appear-animation-delay="200">
-                            </div>
+{{--                            <div class="col-md-8 col-lg-6 pl-lg-0 text-center text-lg-left mx-auto">--}}
+{{--                                <img class="img-fluid m-3 my-0 appear-animation" alt="تصاویر شرکت" src="{{$data['img2']}}"  data-appear-animation="expandIn" data-appear-animation-delay="400">--}}
+{{--                                <img class="img-fluid m-3 my-0 appear-animation" src="{{$data['img3']}}" alt="تصاویر شرکت" data-appear-animation="expandIn" data-appear-animation-delay="200">--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>

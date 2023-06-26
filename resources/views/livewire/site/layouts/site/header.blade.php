@@ -24,10 +24,18 @@
                         </div>
                         <div class="header-column justify-content-end">
                             <div class="header-row">
-                                <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean social-icons-icon-light">
-                                    @foreach($data['contact'] as $item)
-                                        <li class="social-icons-{{$item['img']}}"><a target="_blank" href="{{$item['link']}}"><i class="fab fa-{{$item['img']}}"></i></a></li>
-                                    @endforeach
+                                <ul class="header-extra-info">
+                                    <li class="m-0">
+                                        <div class="feature-box reverse-allres feature-box-style-2 align-items-center">
+                                            <div class="feature-box-icon">
+                                                <i class="fab fa-whatsapp text-white text-7 p-relative"></i>
+                                            </div>
+                                            <div class="feature-box-info">
+                                                <p class="pb-0 font-weight-semibold text-2"><span class="ltr-text text-white">{{$data['tel']}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -43,10 +51,10 @@
                                     <div class="feature-box feature-box-style-2 align-items-center">
                                         <div class="">
                                             <ul class="nav nav-pills flex-column flex-lg-row" >
-                                                <li>
+                                                <li class="m-0">
                                                     <a class="dropdown-item justify-content-center border d-flex align-items-center rounded" href="{{route('cart')}}"> <i class="fa px-1 fa-shopping-basket"></i>سبد خرید </a>
                                                 </li>
-                                                <li class="dropdown d-flex align-items-center">
+                                                <li class="dropdown d-flex align-items-center ">
                                                     @if(auth()->check())
                                                         <a class="dropdown-item px-1" href="{{ route('user.dashboard') }}"> {{ auth()->user()->user_name ?? auth()->user()->phone  }}  </a>
                                                         /
@@ -56,7 +64,7 @@
                                                             <a class="dropdown-item  px-1" href="{{route('admin.dashboard')}}"> مدیریت </a>
                                                         @endif
                                                     @else
-                                                        <a class="dropdown-item dropdown-toggle {{request()->routeIs('auth') ? 'active' : ''}}" href="{{ route('auth') }}"> حساب مشتریان </a>
+                                                        <a class="dropdown-item {{request()->routeIs('auth') ? 'active' : ''}}" href="{{ route('auth') }}"> حساب مشتریان </a>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -75,22 +83,9 @@
                     <div class="header-column justify-content-end w-50 order-2 order-md-3">
                         <div class="header-row">
                            <div>
-                               <ul class="header-extra-info">
-                                   <li class="m-0">
-                                       <div class="feature-box reverse-allres feature-box-style-2 align-items-center">
-                                           <div class="feature-box-icon">
-                                               <i class="fab fa-whatsapp text-7 p-relative"></i>
-                                           </div>
-                                           <div class="feature-box-info">
-                                               <p class="pb-0 font-weight-semibold text-2"><span class="ltr-text">{{$data['tel']}}</span>
-                                               </p>
-                                           </div>
-                                       </div>
-                                   </li>
-                               </ul>
                                <div class="feature-box-info mt-2 text-right">
                                    <a href="{{route('home')}}">
-                                       <img class="p-relative w-25 top-1" alt="لوگو" src="{{asset($data['logo'])}}">
+                                       <img class="p-relative w-50 top-1" alt="لوگو" src="{{asset($data['logo'])}}">
                                    </a>
                                </div>
                            </div>

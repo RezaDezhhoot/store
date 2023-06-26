@@ -69,6 +69,7 @@
 
                                 </div>
 
+                                @if($article->type == \App\Models\Article::ARTICLE)
                                 <div id="comments" class="post-block mt-5 post-comments">
                                     <h4 class="mb-3 secondary-font">{{ $comments->count() <= 0 ? 'بدون' : $comments->count()  }} دیدگاه</h4>
 
@@ -150,7 +151,7 @@
                                         </div>
                                     </form>
                                 </div>
-
+                                @endif
                             </div>
                         </article>
 

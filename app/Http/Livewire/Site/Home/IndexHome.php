@@ -34,7 +34,7 @@ class IndexHome extends BaseComponent
         $this->data['img2'] = Setting::getSingleRow('homeImg2');
         $this->data['img3'] = Setting::getSingleRow('homeImg3');
         $send = [];
-        $this->articles = Article::query()->latest()->published()->take(4)->get();
+        $this->articles = Article::query()->article()->latest()->published()->take(4)->get();
         $this->products = Product::query()->latest()->get();
         $i = 0;
 //        foreach ($content as $key => $value)

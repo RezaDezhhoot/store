@@ -8,12 +8,15 @@ use App\Models\Comment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Article;
+use Illuminate\Validation\Rule;
 
 class StoreArticle extends BaseComponent
 {
     use AuthorizesRequests;
     public $article , $mode , $header , $data = [] , $category;
     public $slug ,$title,$main_image,$content,$seo_keywords,$seo_description,$status , $sub_title;
+
+    public $type;
 
     public function mount($action , $id = null)
     {
@@ -31,6 +34,7 @@ class StoreArticle extends BaseComponent
             $this->status = $this->article->status;
             $this->category = $this->article->category_id;
             $this->sub_title = $this->article->sub_title;
+            $this->type = $this->article->type;
         } elseif($action == 'create') $this->header = 'مقاله جدید';
         else abort(404);
 
@@ -40,6 +44,7 @@ class StoreArticle extends BaseComponent
             ['type',Category::ARTICLE]
         ])->pluck('title','id');
         $this->data['status'] = Article::getStatus();
+        $this->data['type'] = Article::getType();
     }
 
     public function deleteItem()
@@ -60,7 +65,7 @@ class StoreArticle extends BaseComponent
             $this->saveInDateBase($this->article);
         else{
             $this->saveInDateBase(new Article());
-            $this->reset(['slug','title','main_image','content','seo_keywords','seo_description','status','category','sub_title']);
+            $this->reset(['slug','title','main_image','content','seo_keywords','seo_description','status','category','sub_title','type']);
         }
     }
 
@@ -76,6 +81,7 @@ class StoreArticle extends BaseComponent
             'seo_description' => ['required','string','max:250'],
             'status' => ['required','in:'.Article::SHARED.','.Article::DEMO],
             'category' => ['nullable','exists:categories,id'],
+            'type' => ['required','string',Rule::in(array_keys(Article::getType()))]
         ];
         $messages = [
             'slug' => 'نام مستعار',
@@ -86,7 +92,8 @@ class StoreArticle extends BaseComponent
             'seo_description' => 'توضیحات سئو',
             'status' => 'وضعیت',
             'category' => 'دسته',
-            'sub_title' => 'زیر عنوان'
+            'sub_title' => 'زیر عنوان',
+            'type' => 'نوع نوشته'
         ];
         $this->validate($fields,[],$messages);
 
@@ -99,6 +106,7 @@ class StoreArticle extends BaseComponent
         $model->status = $this->status;
         $model->category_id = $this->category;
         $model->sub_title = $this->sub_title;
+        $model->type = $this->type;
         $model->user_id = Auth::id();
         $model->save();
 
