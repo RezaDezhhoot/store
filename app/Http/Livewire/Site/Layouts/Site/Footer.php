@@ -23,6 +23,7 @@ class Footer extends BaseComponent
         $this->data['copyRight'] = Setting::getSingleRow('copyRight');
         $this->data['contact'] = Setting::getSingleRow('contact',[]);
         $this->data['links'] = Setting::getSingleRow('links',[]);
+        $this->data['linksR'] = Setting::getSingleRow('linksR',[]);
     }
 
     public function render()

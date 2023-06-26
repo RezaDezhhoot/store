@@ -10,11 +10,9 @@
                     <h3>{{ $data['title'] }}</h3>
                     <div class="footer_menu">
                         <ul>
-                            <li><a href="{{ route('shop') }}">فروشگاه</a></li>
-                            <li><a href="{{ route('articles') }}">اخبار و مقالات</a></li>
-                            <li><a href="{{ route('about') }}">درباره ما</a></li>
-                            <li><a href="{{ route('contact') }}">ارتباط با ما</a></li>
-                            <li><a href="{{ route('faq') }}">سوالات متداول</a></li>
+                            @foreach($data['linksR'] as $link)
+                                <li><a href="{{ $link['link'] }}">{{ $link['title'] }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

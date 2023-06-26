@@ -14,7 +14,7 @@ class BaseSetting extends BaseComponent
     public  $data = [] , $i = 1 , $registerGift , $notification  , $tel , $email, $address, $seoDescription , $seoKeyword ;
     public   $google , $password_length , $dos_count  , $valid_ticket_files  , $ticket_per_day , $miniAbout , $policy;
 
-    public $start_time , $end_time , $office ,  $links = [];
+    public $start_time , $end_time , $office ,  $links = [] , $linksR = [];
 
     public function mount()
     {
@@ -46,6 +46,7 @@ class BaseSetting extends BaseComponent
         $this->end_time = Setting::getSingleRow('end_time');
         $this->office = Setting::getSingleRow('office');
         $this->links = Setting::getSingleRow('links',[]);
+        $this->linksR = Setting::getSingleRow('linksR',[]);
     }
 
     public function render()
@@ -92,6 +93,9 @@ class BaseSetting extends BaseComponent
                 'links' => ['nullable','array'],
                 'links.*.link' => ['required','string','max:1000'],
                 'links.*.title' => ['required','string','max:1000'],
+                'linksR' => ['nullable','array'],
+                'linksR.*.link' => ['required','string','max:1000'],
+                'linksR.*.title' => ['required','string','max:1000'],
             ] , [] , [
                 'name' => 'نام سایت',
                 'title' => 'عنوان سایت',
@@ -114,9 +118,12 @@ class BaseSetting extends BaseComponent
                 'dos_count' => 'حداکثر امکان برای درخواست های پیوسته سمت سرور',
                 'start_time' => 'تایم کاری شنبه تا چهارشنبه',
                 'end_time' => 'تایم کاری پنجشنبه تا جمعه',
-                'links' => 'لینک های دانلود',
-                'links.*.link' => 'لینک های دانلود',
-                'links.*.title' => 'لینک های دانلود',
+                'links' => 'لینک های اضافی',
+                'links.*.link' => 'لینک های اضافی',
+                'links.*.title' => 'لینک های اضافی',
+                'linksR' => 'لینک های اضافی',
+                'linksR.*.link' => 'لینک های اضافی',
+                'linksR.*.title' => 'لینک های اضافی',
             ]
         );
         Setting::updateOrCreate(['name' => 'subject'], ['value' => json_encode($this->subject)]);
@@ -142,6 +149,7 @@ class BaseSetting extends BaseComponent
         Setting::updateOrCreate(['name' => 'end_time'], ['value' => $this->end_time]);
         Setting::updateOrCreate(['name' => 'office'], ['value' => $this->office]);
         Setting::updateOrCreate(['name' => 'links'], ['value' => json_encode($this->links)]);
+        Setting::updateOrCreate(['name' => 'linksR'], ['value' => json_encode($this->linksR)]);
         $this->emitNotify('اطلاعات با موفقیت ثبت شد');
     }
 
@@ -168,5 +176,15 @@ class BaseSetting extends BaseComponent
     public function addLinks()
     {
         $this->links[] = '';
+    }
+
+    public function deleteLinkR($key)
+    {
+        unset($this->linksR[$key]);
+    }
+
+    public function addLinksR()
+    {
+        $this->linksR[] = '';
     }
 }

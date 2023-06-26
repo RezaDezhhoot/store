@@ -28,7 +28,20 @@
             <x-admin.forms.input type="text" id="start_time" label="تایم کاری شنبه تا چهارشنبه" wire:model.defer="start_time"/>
             <x-admin.forms.input type="text" id="end_time" label="تایم کاری پنجشنبه تا حمعه" wire:model.defer="end_time"/>
 
-            <x-admin.form-section label="لینک های اضافی">
+            <x-admin.form-section label="لینک های اضافی ستون اول">
+                <div class="border p-3">
+                    <x-admin.button class="btn btn-light-primary font-weight-bolder btn-sm" content="افزودن لینک" wire:click="addLinksR()" />
+                    @foreach($linksR as $key => $item)
+                        <div class="form-group d-flex align-items-center col-12">
+                            <input class="form-control col-5" id="r{{ $key }}link-title" type="text" placeholder="عنوان" wire:model.defer="linksR.{{$key}}.title">
+                            <input class="form-control col-5" id="r{{ $key }}link" type="text" placeholder="لینک" wire:model.defer="linksR.{{$key}}.link">
+                            <div><button class="btn btn-light-danger font-weight-bolder btn-sm" wire:click="deleteLinksR({{ $key }})">حذف</button></div>
+                        </div>
+                    @endforeach
+                </div>
+            </x-admin.form-section>
+
+            <x-admin.form-section label="لینک های اضافی ستون دوم">
                 <div class="border p-3">
                     <x-admin.button class="btn btn-light-primary font-weight-bolder btn-sm" content="افزودن لینک" wire:click="addLinks()" />
                     @foreach($links as $key => $item)
